@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ChatMessages from '../components/ChatMessages';
+import useOpenAi from '../hooks/useOpenAi';
 
 const styles = StyleSheet.create({
   inputDiv: {
@@ -33,18 +34,23 @@ const styles = StyleSheet.create({
 function HomePage() {
   const [textValue, setTextValue] = useState('');
   const [userChat, setUserChat] = useState([]);
+  const [data, fetchData] = useOpenAi();
 
   const updateChatMessages = () => {
     setUserChat((prevChats) => [
       ...prevChats,
       { index: userChat.length, text: textValue },
     ]);
+    fetchData(textValue);
     setTextValue('');
+  };
+
+  useEffect(() => {
     setUserChat((prevChats) => [
       ...prevChats,
-      { index: userChat.length + 1, text: 'This is from AI' },
+      { index: userChat.length, text: data },
     ]);
-  };
+  }, [data]);
 
   return (
     <View style={styles.container}>
