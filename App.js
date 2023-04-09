@@ -9,7 +9,7 @@ const nagivator = createStackNavigator(
   {
     initialRouteName: 'Home',
     defaultNavigationOptions: {
-      title: 'Chat Bot',
+      title: 'Chat AI',
     },
   }
 );

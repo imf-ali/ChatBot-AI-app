@@ -6,6 +6,8 @@
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "plugins": ["react", "prettier"],
   "rules": {
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/function-component-definition" : "off",
+    "react/require-default-props" : "off"
   }
 }

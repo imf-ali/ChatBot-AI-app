@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import ChatMessages from '../components/ChatMessages';
 
 const styles = StyleSheet.create({
   inputDiv: {
@@ -30,17 +31,39 @@ const styles = StyleSheet.create({
 });
 
 function HomePage() {
+  const [textValue, setTextValue] = useState('');
+  const [userChat, setUserChat] = useState([]);
+
+  const updateChatMessages = () => {
+    setUserChat((prevChats) => [
+      ...prevChats,
+      { index: userChat.length, text: textValue },
+    ]);
+    setTextValue('');
+    setUserChat((prevChats) => [
+      ...prevChats,
+      { index: userChat.length + 1, text: 'This is from AI' },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.displayArea} />
+      <View style={styles.displayArea}>
+        <ChatMessages userChat={userChat} />
+      </View>
       <View style={styles.inputDiv}>
         <TextInput
           style={styles.textInput}
           placeholder="Enter the text"
           placeholderTextColor="#CFC7C5"
+          value={textValue}
+          onChangeText={(newTerm) => setTextValue(newTerm)}
         />
-        <TouchableOpacity style={styles.sendButton} onPress={() => {}}>
-          <FontAwesome name="send" size={18} color="white" />
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={updateChatMessages}
+        >
+          <FontAwesome name="send" size={18} color="#64bca4" />
         </TouchableOpacity>
       </View>
     </View>
